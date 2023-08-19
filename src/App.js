@@ -32,7 +32,14 @@ function App() {
               setRoom(1);
             }}
           ></input>
-          <button onClick={joinRoom}>Join A Room</button>
+          <button
+            onClick={joinRoom}
+            onKeyPress={(event) => {
+              event.key === "Enter" && joinRoom();
+            }}
+          >
+            Join A Room
+          </button>
         </div>
       ) : (
         <Chat socket={socket} username={username} room={room} />
