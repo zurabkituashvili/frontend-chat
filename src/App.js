@@ -3,6 +3,8 @@ import io from "socket.io-client";
 import { useState } from "react";
 import Chat from "./Chat";
 
+// const socket = io.connect("http://localhost:3001");
+
 const socket = io.connect("https://backend-chat-7be3.onrender.com");
 
 function App() {
@@ -11,7 +13,7 @@ function App() {
   const [showChat, setShowChat] = useState(false);
 
   const joinRoom = () => {
-    if (username !== "" && room !== "") {
+    if (username !== "") {
       socket.emit("join_room", room);
       setShowChat(true);
     }
@@ -27,13 +29,7 @@ function App() {
             placeholder="UserName..."
             onChange={(event) => {
               setUsername(event.target.value);
-            }}
-          ></input>
-          <input
-            type="text"
-            placeholder="Room ID..."
-            onChange={(event) => {
-              setRoom(event.target.value);
+              setRoom(1);
             }}
           ></input>
           <button onClick={joinRoom}>Join A Room</button>
