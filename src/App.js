@@ -31,7 +31,6 @@ function App() {
               setUsername(event.target.value);
               setRoom(1);
             }}
-            onKeyPress={handleInputKeyPress}
           ></input>
           <button onClick={joinRoom}>Join A Room</button>
         </div>
