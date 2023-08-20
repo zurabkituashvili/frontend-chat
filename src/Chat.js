@@ -24,10 +24,20 @@ function Chat({ socket, username, room }) {
   };
 
   useEffect(() => {
+    // Fetch old messages from the database
+    fetch("https://backend-chat-7be3.onrender.com/fetch_messages?room=" + room)
+      .then((response) => response.json())
+      .then((data) => {
+        setMessageList(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching messages:", error);
+      });
+
     socket.on("receive_message", (data) => {
       setMessageList((list) => [...list, data]);
     });
-  }, [socket]);
+  }, [socket, room]);
 
   return (
     <div className="chat-window">
@@ -41,6 +51,7 @@ function Chat({ socket, username, room }) {
               <div
                 className="message"
                 id={username === messageContent.author ? "you" : "other"}
+                key={messageContent.id}
               >
                 <div>
                   <div className="message-content">
@@ -48,6 +59,7 @@ function Chat({ socket, username, room }) {
                   </div>
                   <div className="message-meta">
                     <p id="author">{messageContent.author}</p>
+                    <p id="author">{messageContent.username}</p>
                     <p id="time">&nbsp;&nbsp;({messageContent.time})</p>
                   </div>
                 </div>
